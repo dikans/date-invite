@@ -7,7 +7,8 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { LottieAnimation } from "@/components/ui/lottie-animation";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const locations = [
   {
@@ -176,12 +177,7 @@ export default function SimpleDatePage() {
             Buổi hẹn kết thúc rùi!
           </h1>
 
-          <div className="w-48 h-48 mx-auto mb-6">
-            <LottieAnimation
-              src="/animations/heart.json"
-              style={{ width: "100%", height: "100%" }}
-            />
-          </div>
+          <div className="w-48 h-48 mx-auto mb-6"></div>
 
           <p className="text-xl mb-8 text-purple-100">
             Cảm ơn cậu đã nhận lời đi date với tớ nha. Mong chúng ta sẽ có những
