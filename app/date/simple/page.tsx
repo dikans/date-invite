@@ -28,10 +28,17 @@ const locations = [
     background: "/images/workshop.webp",
   },
   {
+    id: "movie",
+    title: "Tại sao lại không xem phim nhỉ",
+    description: "Tớ cũng không nhớ lần cuối đi xem phim là từ bao giờ nữa kk",
+    animation: "/animations/movies.json",
+    background: "/images/movies.webp",
+  },
+  {
     id: "home",
     title: "Về nhà nha",
     description:
-      "Còn nhiều thứ mình muốn làm, nhưng mà option này nên kết thúc ở đây thôi nha",
+      "Còn nhiều điều mình muốn làm cùng cậu, nhưng mà option này nên kết thúc ở đây thôi nha ^^",
     animation: "/animations/bike.json",
     background: "/images/di-ve-nha.webp",
   },

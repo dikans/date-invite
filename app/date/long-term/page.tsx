@@ -12,10 +12,18 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const locations = [
   {
+    id: "coffee-shop",
+    title: "Matcha latte hehehe",
+    description:
+      "Các cụ bảo rồi, cốc latte là đầu câu chuyện. Còn cụ nào nói thì khum biết",
+    animation: "/animations/latte.json",
+    background: "/images/matcha.webp",
+  },
+  {
     id: "flower-workshop",
     title: "Workshop cắm hoa",
     description:
-      "Chúng ta sẽ bắt đầu buổi hẹn với một workshop cắm hoa, nơi chúng ta có thể tạo ra những bó hoa đẹp cùng nhau.",
+      "Chúng ta sẽ tiếp tục buổi hẹn với workshop cắm hoa, nơi chúng ta có thể tạo ra những bó hoa đẹp cùng nhau.",
     animation: "/animations/flower_shop.json",
     background: "/images/workshop.webp",
   },
@@ -28,12 +36,11 @@ const locations = [
     background: "/images/dinner.webp",
   },
   {
-    id: "coffee-shop",
-    title: "Matcha latte tại quán cafe",
-    description:
-      "Sau bữa tối, chúng ta ghé thăm một quán cà phê xinh xắn để uống matcha latte và tráng miệng, chia sẻ câu chuyện những câu chuyện cùng nhau",
-    animation: "/animations/latte.json",
-    background: "/images/matcha.webp",
+    id: "movie",
+    title: "Vì cậu thích đi xem phim mà ^^",
+    description: "Có lẽ xem thêm 1 bộ phim cũng đâu có mất gì nhỉ XD",
+    animation: "/animations/movies.json",
+    background: "/images/movies.webp",
   },
   {
     id: "lake-homestay",
