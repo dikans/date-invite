@@ -8,6 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { LottieAnimation } from "@/components/ui/lottie-animation";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import emailjs from "@emailjs/browser";
+import { toast } from "@/hooks/use-toast";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const locations = [
@@ -57,6 +60,8 @@ export default function LongTermDatePage() {
   const [direction, setDirection] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [animationData, setAnimationData] = useState(null);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     // Get the current location's animation path
@@ -88,6 +93,66 @@ export default function LongTermDatePage() {
   };
 
   const currentLocation = locations[currentStep];
+
+  // Function to send email for option 1
+  function sendOptionOneEmail() {
+    setIsSendingEmail(true);
+
+    // EmailJS credentials should be set in your .env.local file:
+    // NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
+    // NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
+    // NEXT_PUBLIC_EMAILJS_USER_ID=your_user_id
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+    const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "";
+
+    // Verify that credentials are set
+    if (!serviceId || !templateId || !userId) {
+      console.error("EmailJS credentials are not set in environment variables");
+      toast({
+        title: "Configuration Error",
+        description:
+          "Email service is not properly configured. Please check your environment variables.",
+        variant: "destructive",
+      });
+      setIsSendingEmail(false);
+      return;
+    }
+
+    const templateParams = {
+      to_name: "You", // Replace with recipient's name
+      from_name: "Date Invite App",
+      message:
+        'User has chosen Option 2: "Cùng nhau tạo 1 khởi đầu mới nhé ^^"',
+      reply_to: "kdnguyen2711@gmail.com", // Replace with your email
+      to_email: "kdnguyen2711@gmail.com", // Replace with recipient's email
+      date: new Date().toLocaleString(),
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, userId)
+      .then((response) => {
+        console.log("Email sent successfully!", response);
+        toast({
+          title: "Mình đã nhận thông tin rùi nha!",
+          description: "Hẹn gặp cậu trong 1 tuần nữa nhé ^^",
+          variant: "default",
+        });
+        // Navigate to home page after sending email
+        router.push("/");
+      })
+      .catch((error) => {
+        console.error("Email sending failed:", error);
+        toast({
+          title: "Gửi thông tin thất bại",
+          description: "Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại sau.",
+          variant: "destructive",
+        });
+      })
+      .finally(() => {
+        setIsSendingEmail(false);
+      });
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -206,14 +271,16 @@ export default function LongTermDatePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/">
-              <Button
-                variant="outline"
-                className="bg-transparent border-pink-400 text-pink-300 hover:bg-pink-400/20 w-full sm:w-auto"
-              >
-                ....
-              </Button>
-            </Link>
+            <Button
+              variant="outline"
+              className="bg-transparent border-pink-400 text-pink-300 hover:bg-pink-400/20 w-full sm:w-auto"
+              onClick={sendOptionOneEmail}
+              disabled={isSendingEmail}
+            >
+              {isSendingEmail
+                ? "Đang gửi..."
+                : "Cùng nhau tạo 1 khởi đầu mới nhé ^^"}
+            </Button>
             <Button className="bg-pink-500 hover:bg-pink-600 text-white w-full sm:w-auto">
               Sao lại không nhỉ XD
             </Button>
